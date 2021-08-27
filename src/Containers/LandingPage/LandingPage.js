@@ -20,18 +20,22 @@ export const LandingPage = () => {
 
   const secondGroupMenu = {
     name: "Second selection",
-    data: data.menus[1].filter(
-      (d) => !rules[+firstSelectedRadioGroup]?.includes(+d.id)
-    ),
+    data: !secondSelectedRadioGroup
+      ? data.menus[1]
+      : data.menus[1].filter(
+          (d) => !rules[+firstSelectedRadioGroup]?.includes(+d.id)
+        ),
   };
 
   const thirdGroupMenu = {
     name: "Third selection",
-    data: data.menus[2].filter(
-      (d) =>
-        !rules[+firstSelectedRadioGroup]?.includes(+d.id) &&
-        !rules[+secondSelectedRadioGroup]?.includes(+d.id)
-    ),
+    data: !firstSelectedRadioGroup
+      ? data.menus[2]
+      : data.menus[2].filter(
+          (d) =>
+            !rules[+firstSelectedRadioGroup]?.includes(+d.id) &&
+            !rules[+secondSelectedRadioGroup]?.includes(+d.id)
+        ),
   };
 
   return (
@@ -44,21 +48,20 @@ export const LandingPage = () => {
             groupName={firstGroupMenu.name}
             onChange={setFirstSelectedRadioGroup}
           />
-          {firstSelectedRadioGroup && (
-            <RadioGroup
-              data={secondGroupMenu.data}
-              groupName={secondGroupMenu.name}
-              onChange={setSecondSelectedRadioGroup}
-            />
-          )}
 
-          {secondSelectedRadioGroup && (
-            <RadioGroup
-              data={thirdGroupMenu.data}
-              groupName={thirdGroupMenu.name}
-              onChange={setThirdSelectedRadioGroup}
-            />
-          )}
+          <RadioGroup
+            data={secondGroupMenu.data}
+            groupName={secondGroupMenu.name}
+            onChange={setSecondSelectedRadioGroup}
+            disabled={!firstSelectedRadioGroup}
+          />
+
+          <RadioGroup
+            data={thirdGroupMenu.data}
+            groupName={thirdGroupMenu.name}
+            onChange={setThirdSelectedRadioGroup}
+            disabled={!secondSelectedRadioGroup}
+          />
 
           <Button disabled={!thirdSelectedRadioGroup}>Submit</Button>
         </Container>

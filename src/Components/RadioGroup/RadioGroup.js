@@ -1,7 +1,7 @@
 import "./radioGroup.css";
 
 export const RadioGroup = (props) => {
-  const { data, groupName, onChange } = props;
+  const { data, groupName, onChange, ...res } = props;
 
   return (
     <div className="radio-wrapper">
@@ -16,6 +16,7 @@ export const RadioGroup = (props) => {
               name={groupName}
               value={value}
               onChange={(e) => onChange(e.target.id)}
+              {...res}
             />
             <label htmlFor={id}>{value}</label>
           </div>
